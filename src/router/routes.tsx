@@ -5,21 +5,21 @@ import LoginPage from "../pages/LoginPage/Login";
 import { INavProps } from "../pages/types";
 import WelcomePage from "../pages/WelcomePage/Welcome";
 import SignUp from "../pages/SignUpPage/SignUp";
+import Home from "../pages/HomePage/Home";
+import Profile from "../pages/ProfilePage/Profile";
+import { Footer } from "../components/Footer/Footer";
 
-const navigation = {
-  brand: { name: "Jetcake", to: "/" },
-  links: [
-    { name: "Log In", to: "/login" },
-    { name: "Sign Up", to: "/signup" }
-  ]
-};
-
-export const Routes: React.FC<INavProps> = ({ navbarState, handleNavbar }) => {
+export const Routes: React.FC<INavProps> = ({
+  navbarState,
+  handleNavbar,
+  navigation
+}) => {
   const { brand, links } = navigation;
   return (
-    <BrowserRouter>
+    <BrowserRouter forceRefresh={true}>
       <div>
         <Navbar
+          navigation={navigation}
           navbarState={navbarState}
           handleNavbar={handleNavbar}
           brand={brand}
@@ -27,9 +27,12 @@ export const Routes: React.FC<INavProps> = ({ navbarState, handleNavbar }) => {
         />
         <Switch>
           <Route path="/" exact={true} component={WelcomePage} />
+          <Route path="/home" exact={true} component={Home} />
           <Route path="/login" exact={true} component={LoginPage} />
           <Route path="/signup" exact={true} component={SignUp} />
+          <Route path="/profile" exact={true} component={Profile} />
         </Switch>
+        <Footer />
       </div>
     </BrowserRouter>
   );

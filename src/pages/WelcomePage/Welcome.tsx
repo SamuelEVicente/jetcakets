@@ -1,7 +1,16 @@
 import React from "react";
 import styled from "styled-components";
+import { useHistory } from "react-router-dom";
 
 const Welcome: React.FC = () => {
+  localStorage.authenticated = false;
+  let history = useHistory();
+  React.useEffect(() => {
+    if (localStorage.authenticated === "true") {
+      history.push("home");
+    }
+  }, [history]);
+
   return (
     <WelcomeContainer>
       <Title>Welcome to JetCake Coding Challenge!!</Title>
