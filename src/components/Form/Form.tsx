@@ -56,29 +56,11 @@ export class Form extends React.Component<IFormProps, IFormState> {
   ): Promise<void> => {
     e.preventDefault();
 
-    if (this.validateForm()) {
-      const submitSuccess: boolean = await this.submitForm();
+    if (this.props.validateForm()) {
+      const submitSuccess: boolean = await this.props.submitForm();
       this.setState({ submitSuccess });
     }
   };
-
-  /**
-   * Executes the validation rules for all the fields on the form and sets the error state
-   * @returns {boolean} - Whether the form is valid or not
-   */
-  private validateForm(): boolean {
-    // TODO - validate form
-    return true;
-  }
-
-  /**
-   * Submits the form to the http api
-   * @returns {boolean} - Whether the form submission was successful or not
-   */
-  private async submitForm(): Promise<boolean> {
-    // TODO - submit the form
-    return true;
-  }
 
   public render() {
     const { submitSuccess, errors } = this.state;
@@ -115,18 +97,13 @@ export class Form extends React.Component<IFormProps, IFormState> {
 }
 
 const FormStyled = styled.form`
-  display: flex;
   align-items: center;
   justify-content: center;
-  align-self: center;
   flex-flow: column;
-  width: 500px;
-  height: 550px;
-  margin: 0 auto;
+  margin-top: 100px;
   border: 2px solid #000;
   border-radius: 20px;
   background: #eee;
-  margin-top: 250px;
   h2 {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 14px;
