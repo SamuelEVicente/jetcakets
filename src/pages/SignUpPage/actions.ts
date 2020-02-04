@@ -1,7 +1,9 @@
 import { ThunkDispatch as Dispatch } from "redux-thunk";
 import { ISetEmail, ISetPassword } from "../LoginPage/actions";
 import * as constants from "./actionTypes";
-
+import { post } from "../../utils/http";
+import { User } from "../../utils/interfaces";
+import { localEndpoint } from "../../config";
 export type SecurityQuestion = {
   question: string;
   answer: string;
@@ -9,6 +11,7 @@ export type SecurityQuestion = {
 
 export interface ICurrent {
   phone: string;
+  photoUrl: string;
   address: string;
   birthdate: string;
   password: string;
@@ -44,6 +47,11 @@ export interface ISetSecurityAnswer {
 
 export interface ISetPasswordVerification {
   type: constants.SET_PASSWORD_VERIFICATION;
+  payload: string;
+}
+
+export interface ISetPhotoUrl {
+  type: constants.SET_PHOTO_URL;
   payload: string;
 }
 
@@ -123,16 +131,30 @@ export type SetFieldAction =
 export function signUp(
   email: string,
   password: string,
-  passverification: string,
-  birthdate: string,
+  birth: string,
   address: string,
   phone: string,
+  photoUrl: string,
   securityQuestions: Array<string>,
   securityAnswers: Array<string>
 ) {
   return async (dispatch: Dispatch<SetFieldAction, {}, any>) => {
     //add signup functionality;
-    //let response = await postJson('/artible/create', data, true)
-
+    try {
+      let res = await post<User>(`${localEndpoint}user/`, {
+        email,
+        password,
+        birth,
+        phone,
+        photoUrl,
+        address,
+        securityAnswers,
+        securityQuestions,
+        role: "ADMIN"
+      });
+      return res.parsedBody?.user;
+    } catch (error) {
+      throw new Error(error.message);
+    }
   };
 }

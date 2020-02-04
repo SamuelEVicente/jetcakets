@@ -5,7 +5,8 @@ import {
   ISetPhone,
   ISetSecurityQuestion,
   ISetSecurityAnswer,
-  ISetPasswordVerification
+  ISetPasswordVerification,
+  ISetPhotoUrl
 } from "./actions";
 import { ISetEmail, ISetPassword } from "../LoginPage/actions";
 import {
@@ -16,7 +17,8 @@ import {
   SET_ADDRESS,
   SET_BIRTHDATE,
   SET_SECURITY_QUESTION,
-  SET_SECURITY_ANSWER
+  SET_SECURITY_ANSWER,
+  SET_PHOTO_URL
 } from "./actionTypes";
 
 export default function currentReducer(
@@ -26,6 +28,7 @@ export default function currentReducer(
     passverification: "",
     birthdate: "",
     phone: "",
+    photoUrl: "",
     address: "",
     securityQuestions: ["", "", ""],
     securityAnswers: ["", "", ""]
@@ -39,6 +42,7 @@ export default function currentReducer(
     | ISetSecurityQuestion
     | ISetSecurityAnswer
     | ISetPasswordVerification
+    | ISetPhotoUrl
 ): ICurrent {
   switch (action.type) {
     case SET_EMAIL:
@@ -80,6 +84,11 @@ export default function currentReducer(
       return {
         ...state,
         securityAnswers: action.payload
+      };
+    case SET_PHOTO_URL:
+      return {
+        ...state,
+        photoUrl: action.payload
       };
     default: {
       return state;
