@@ -11,10 +11,14 @@ type TLoginProps = ReturnType<typeof mapStateToProps> &
 
 class LoginPage extends PureComponent<TLoginProps> {
   handleChange = (event: any) => {
-    event.target.name === "email"
+    event.currentTarget.name === "email"
       ? this.props.setEmail(event.target.value)
       : this.props.setPassword(event.target.value);
   };
+
+  login = () => {
+    this.props.logIn(this.props.email, this.props.password)
+  }
 
   render() {
     return (
@@ -30,13 +34,14 @@ class LoginPage extends PureComponent<TLoginProps> {
         />
         <LoginInput
           className="form-control"
-          name="email"
+          name="password"
+          id="password"
           value={this.props.password}
           onChange={this.handleChange}
           type="password"
           placeholder="password"
         />
-        <button>Login</button>
+        <button onClick={this.login}>Login</button>
       </LoginContainer>
     );
   }
